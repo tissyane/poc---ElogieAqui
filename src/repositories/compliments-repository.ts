@@ -12,7 +12,10 @@ async function postCompliment(compliment: Compliment): Promise<QueryResult<Compl
     ]);
 }
 
+async function getCompliments(): Promise<QueryResult> {
+  return db.query(`SELECT * FROM compliments`)
+ 
+}
 
 
-
-export {postCompliment}
+export {postCompliment, getCompliments}

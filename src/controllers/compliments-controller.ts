@@ -1,13 +1,17 @@
 import { Request, Response } from "express";
 import { Compliment } from "../protocols/compliment.js";
-import { postCompliment } from "../repositories/compliments-repository.js";
+import { getCompliments, postCompliment } from "../repositories/compliments-repository.js";
 
 async function insertCompliment(req: Request, res: Response){
   const compliment = req.body as Compliment
     const result = await postCompliment(compliment);
-    res.send(`Your compliment was posted:${result.rows}`)
+    res.send(`Your compliment was posted!`)
   }
 
-
   
-  export {insertCompliment}
+async function listCompliments(req: Request, res: Response) {
+  const result = await getCompliments()
+  res.send(result.rows)
+}
+  
+  export {insertCompliment, listCompliments}
