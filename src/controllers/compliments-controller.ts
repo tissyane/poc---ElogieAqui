@@ -1,17 +1,42 @@
 import { Request, Response } from "express";
 import { Compliment } from "../protocols/compliment.js";
-import { getCompliments, postCompliment } from "../repositories/compliments-repository.js";
+import { deleteCompliment, getCompliments, insertCompliment } from "../repositories/compliments-repository.js";
 
-async function insertCompliment(req: Request, res: Response){
-  const compliment = req.body as Compliment
-    const result = await postCompliment(compliment);
-    res.send(`Your compliment was posted!`)
+async function createCompliment(req: Request, res: Response){
+  const compliment = req.body as Compliment;
+  
+  try {
+    await insertCompliment(compliment);
+    res.send(`Your compliment was posted!`)    
+  } catch (error) {
+    res.sendStatus(500);
+  }   
   }
 
   
 async function listCompliments(req: Request, res: Response) {
-  const result = await getCompliments()
-  res.send(result.rows)
+
+  try {
+    const result = await getCompliments()
+    res.send(result.rows)
+  } catch (error) {
+    res.sendStatus(500);
+  }  
 }
   
-  export {insertCompliment, listCompliments}
+async function removeCompliment(req: Request, res: Response) {
+
+  const {id} = req.params;
+
+  try {
+    await deleteCompliment(id)
+    res.send("Your compliment was successfully removed")
+  } catch (error) {
+     res.sendStatus(500);
+  }
+  
+}
+
+
+
+export {createCompliment, listCompliments, removeCompliment}
