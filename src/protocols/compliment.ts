@@ -3,6 +3,5 @@ export type Compliment = {
     author: string,
     company: string,
     description: string,
-    orderDate: string | Date,
     attachments?: URL,
   }
