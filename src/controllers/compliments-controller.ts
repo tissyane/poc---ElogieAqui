@@ -29,7 +29,7 @@ async function findOneCompliment(req: Request, res: Response) {
 
   try {
     const selectedCompliment = await selectCompliment(id)
-    if(selectedCompliment.rowCount < 1) {
+    if(selectedCompliment.rowCount === 0) {
       return res.sendStatus(404)
     }
     res.send(selectedCompliment.rows)
@@ -43,7 +43,7 @@ async function removeCompliment(req: Request, res: Response) {
 
   try {
     const selectedCompliment = await selectCompliment(id)
-    if(selectedCompliment.rowCount < 1) {
+    if(selectedCompliment.rowCount === 0) {
       return res.sendStatus(404)
     }
     await deleteCompliment(id)
@@ -60,16 +60,14 @@ async function updateCompliment(req: Request, res: Response) {
 
   try {
     const selectedCompliment = await selectCompliment(id)
-    if(selectedCompliment.rowCount < 1) {
+    if(selectedCompliment.rowCount === 0) {
       return res.sendStatus(404)
     }
-
-      await updateOne(compliment, id);
-      res.sendStatus(200);
+    await updateOne(compliment, id);
+    res.send("Your compliment was successfully updated")
       
   } catch (error) {
-      console.log(error)
-      res.sendStatus(500);
+    res.sendStatus(500);
   }
 }
 

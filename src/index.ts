@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from 'cors';
 import { createCompliment, findOneCompliment, listCompliments, removeCompliment, updateCompliment } from "./controllers/compliments-controller.js";
+import { getRanking } from "./controllers/ranking-controller.js";
 dotenv.config();
 
 const server = express();
@@ -17,6 +18,8 @@ server.get("/status", (req, res) => {
   server.get("/compliments/:id", findOneCompliment)
   server.delete("/compliments/:id", removeCompliment)
   server.put("/compliments/:id", updateCompliment)
+  
+  server.get("/ranking", getRanking)
 
 
 server.listen(process.env.PORT, () => {console.log(`Server listening on port ${process.env.PORT}...`)});
